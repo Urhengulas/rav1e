@@ -79,7 +79,7 @@ What do we need to have done to start development:
 
  ---------------------------------------------------------------------------------------------------------------------------
 
-[MVP](https://github.com/xiph/rav1e/wiki/Minimum-Viable-Product)
+[MVP](https://github.com/xiph/rav1e/wiki/MVP)
 
 
 
