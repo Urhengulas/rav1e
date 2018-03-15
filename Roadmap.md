@@ -1,12 +1,9 @@
-# Roadmap
-
-
-AV1 Encoder Roadmap
+# AV1 Encoder Roadmap
 
 Things we need to do to make a good encoder:
 
 Write syntax elements & reconstruct
--  Write partitions
+- Write partitions
 - Write ZeroMV / skipmv
 - Write fullpel MV
 - Write subpel MV
