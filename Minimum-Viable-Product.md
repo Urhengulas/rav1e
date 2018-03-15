@@ -33,3 +33,5 @@
   * Do we support all transform types in MVP? VAR_TX? (Wrappers to libaom transforms)
   * Quantization (Is the quantization in Rav1e good enough for MVP, do we need to add anything?)
   * Does the MPV require OBU support?
+  * Keep dependencies to a minimum (evaluate after MVP)
+    * Up and to the left after every change.
