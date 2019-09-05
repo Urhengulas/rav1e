@@ -15,4 +15,4 @@ If it is a scenecut, it is marked as a key frame, otherwise it is marked as an i
 
 ## Desired Features
 * If the max keyint length is in the middle of a flash of content, the key frame should be placed at either the start or end of the flash, instead of in the middle (exactly on the max keyint).
-* Replace the current scenecut detection algorithm with a smarter, cost-based one.
+* Replace the current scenecut detection algorithm with a smarter, cost-based one. [#1528](https://github.com/xiph/rav1e/issues/1528)
