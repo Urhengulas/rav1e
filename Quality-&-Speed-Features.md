@@ -1,3 +1,5 @@
+PSA: this page is extremely outdated. Please refer to `README.md` and the Rust documentation for the `config` module.
+
 ### Required Quality Features
 
 Quality features that are required for to reach parity with state-of-the-art encoders.
