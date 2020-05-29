@@ -14,10 +14,41 @@
 </details>
 
 ## [`../README.md`](../README.md)
+Main README of rav1e:
+- Overview
+- Features
+- Releases
+- Windows builds
+- Building
+- Compressing video
+- Decompressing video
+- Configuring
+- Using the AOMAnalyzer
+- Design
+- Contributing
+- Getting in Touch
+
 ## [`CODING_STYLE.md`](CODING_STYLE.md)
+
 ## [`FRAME_TYPE_SELECTION.md`](FRAME_TYPE_SELECTION.md)
+- Current Features/Process
+- Detection Algorithm
+- Desired Improvements
+
 ## [`GLOSSARY.md`](GLOSSARY.md)
+Explaination of various special terms.
+
 ## [`PROFILING.md`](PROFILING.md)
+List of various prfiling tools:
+- Cargo integrations
+- Generic profiling
+- Tracing
+- Codegen Inspection
+
 ## [`regress_log-bitrate_wrt_log-quantizer.ipynb`](regress_log-bitrate_wrt_log-quantizer.ipynb)
+
 ## [`STRUCTURE.md`](STRUCTURE.md)
+- High-level directory structure
+- Overview of `src/*`
+
 ## [`VERSIONING.md`](VERSIONING.md)
