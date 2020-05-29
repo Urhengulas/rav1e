@@ -10,7 +10,7 @@
 - [`PROFILING.md`](#profilingmd)
 - [`regress_log-bitrate_wrt_log-quantizer.ipynb`](#regress_log-bitrate_wrt_log-quantizeripynb)
 - [`STRUCTURE.md`](#structuremd)
-- [`VERSIONING.md`](#versioningmd)
+- [`VERSIONING`](#versioning)
 </details>
 
 ## [`../README.md`](../README.md)
@@ -51,4 +51,11 @@ List of various prfiling tools:
 - High-level directory structure
 - Overview of `src/*`
 
-## [`VERSIONING.md`](VERSIONING.md)
+## `VERSIONING`
+rav1e follows Cargo's versioning scheme: https://doc.rust-lang.org/cargo/reference/manifest.html#the-version-field
+
+Because rav1e is not yet at version 1.0.0, all changes that break the API require a minor-version bump.
+
+The API is defined as:
+- public functions in src/api.rs
+- command line parameters to the rav1e binary
