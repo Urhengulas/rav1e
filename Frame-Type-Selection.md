@@ -7,7 +7,7 @@ a scenecut.
 This overrides all other criteria for frame type selection. (TODO: How does a user do this?)
 * If there have been fewer than the number of frames specified by `--min-keyint`
 since the last key frame, the current frame is marked as an inter frame.
-* If there have been equal to the number of frames specified by `--keyint`
+* If there have been equal to the number of frames specified by `--keyint` (i.e. the max keyint)
 since the last key frame, the current frame is marked as a key frame.
 * If no other criteria have been met, the current frame is compared with
 the previous frame to see if it is a scenecut.
