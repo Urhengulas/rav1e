@@ -129,22 +129,6 @@ rav1e has several optional features that can be enabled by passing --features to
 
 **NOTE**: `SSE2` is always enabled on `x86_64`, `neon` is always enabled for aarch64, you may set the environment variable `RAV1E_CPU_TARGET` to `rust` to disable all the assembly-optimized routines at the runtime.
 
-## Using the AOMAnalyzer
-
-### Local Analyzer
-
-1. Download the [AOM Analyzer](http://aomanalyzer.org).
-2. Download [inspect.js](https://people.xiph.org/~mbebenita/analyzer/inspect.js) and [inspect.wasm](https://people.xiph.org/~mbebenita/analyzer/inspect.wasm) and save them in the same directory.
-3. Run the analyzer: `AOMAnalyzer path_to_inspect.js output.ivf`
-
-### Online Analyzer
-
-If your `.ivf` file is hosted somewhere (and CORS is enabled on your web server) you can use:
-
-```
-https://arewecompressedyet.com/analyzer/?d=https://people.xiph.org/~mbebenita/analyzer/inspect.js&f=path_to_output.ivf
-```
-
 ## Design
 
 The File Structure and design of the encoder is explained more in the [Structure](doc/STRUCTURE.md) document.

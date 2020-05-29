@@ -4,6 +4,7 @@
 <summary><b>Table of Content</b></summary>
 
 - [`../README.md`](#readmemd)
+- [`AOM_ANALYZER.md`](#aom_analyzermd)
 - [`CODING_STYLE.md`](#coding_stylemd)
 - [`FRAME_TYPE_SELECTION.md`](#frame_type_selectionmd)
 - [`GLOSSARY.md`](#glossarymd)
@@ -27,6 +28,11 @@ Main README of rav1e:
 - Design
 - Contributing
 - Getting in Touch
+
+## [`AOM_ANALYZER.md`](AOM_ANALYZER.md)
+Analyze `.ivf`-files with `AOM Analyzer`:
+* Local Analyzer
+* Online Analyzer
 
 ## [`CODING_STYLE.md`](CODING_STYLE.md)
 
