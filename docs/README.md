@@ -13,7 +13,7 @@
 - [`VERSIONING`](#versioning)
 </details>
 
-## [`../README.md`](../README.md)
+## [`../README.md`](https://github.com/xiph/rav1e/tree/master/README.md)
 Main README of rav1e:
 - Overview
 - Features
