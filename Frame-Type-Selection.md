@@ -10,15 +10,12 @@ since the last key frame, the current frame is marked as an inter frame.
 * If there have been equal to the number of frames specified by `--keyint`
 since the last key frame, the current frame is marked as a key frame.
 * If no other criteria have been met, the current frame is compared with
-the previous frame using a simple difference detection to see if it is a scenecut.
+the previous frame to see if it is a scenecut.
 If it is a scenecut, it is marked as a key frame, otherwise it is marked as an inter frame.
 
 ## Detection Algorithm
-* All detections above are performed with a simple SAD for all planes between two frames.
+* On speeds 0-9, the algorithm compares frame intra cost vs. inter cost. This is better for compression, but slower.
+* On speed 10, the algorithm compares the amount of difference between frames.
 
-## Fast Scenecut
-* A fast scenecut detection mode exists which only checks the luma plane instead of all planes.
-
-## Desired Features
+## Desired Improvements
 * If the max keyint length is in the middle of a flash of content, the key frame should be placed at either the start or end of the flash, instead of in the middle (exactly on the max keyint).
-* Replace the current scenecut detection algorithm with a smarter, cost-based one. [#1528](https://github.com/xiph/rav1e/issues/1528)
