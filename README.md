@@ -7,6 +7,7 @@ The fastest and safest AV1 encoder.
 
 - [Overview](#overview)
 - [Features](#features)
+- [Documentation](#documentation)
 - [Releases](#releases)
 - [Building](#building)
   - [Dependency: NASM](#dependency-nasm)
@@ -19,7 +20,6 @@ The fastest and safest AV1 encoder.
   - [Decompressing video](#decompressing-video)
   - [Configuring](#configuring)
     - [Features](#features-1)
-- [Design](#design)
 - [Contributing](#contributing)
 - [Getting in Touch](#getting-in-touch)
 </details>
@@ -39,6 +39,17 @@ rav1e is an AV1 video encoder. It is designed to eventually cover all use cases,
 * Near real-time encoding at high speed levels
 * Constant quantizer and target bitrate (single- and multi-pass) encoding modes
 * Still picture mode
+
+## Documentation
+Find the documentation in [`docs/README.md`](docs/README.md)
+* AOM_ANALYZER
+* CODING_STYLE
+* FRAME_TYPE_SELECTION
+* GLOSSARY
+* PROFILING
+* regress_log-bitrate_wrt_log.ipynb
+* STRUCTURE
+* VERSIONING
 
 ## Releases
 For the foreseeable future, a weekly pre-release of rav1e will be [published](https://github.com/xiph/rav1e/releases) every Tuesday.
@@ -138,9 +149,6 @@ Find a full list in feature-table in [`Cargo.toml`](Cargo.toml)
   * It requires `gas` on `aarch64`.
 
 **NOTE**: `SSE2` is always enabled on `x86_64`, `neon` is always enabled for aarch64, you may set the environment variable `RAV1E_CPU_TARGET` to `rust` to disable all the assembly-optimized routines at the runtime.
-
-## Design
-The File Structure and design of the encoder is explained more in the [Structure](doc/STRUCTURE.md) document.
 
 ## Contributing
 Please read our guide to [contributing to rav1e](CONTRIBUTING.md).
