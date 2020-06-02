@@ -20,6 +20,7 @@ The fastest and safest AV1 encoder.
   - [Decompressing video](#decompressing-video)
   - [Configuring](#configuring)
     - [Features](#features-1)
+  - [WASI](#wasi)
 - [Contributing](#contributing)
 - [Getting in Touch](#getting-in-touch)
 </details>
@@ -147,6 +148,17 @@ Find a full list in feature-table in [`Cargo.toml`](Cargo.toml)
     * Alternative: Use `clang` assembler by setting `CC=clang`
 
 **NOTE**: `SSE2` is always enabled on `x86_64`, `neon` is always enabled for aarch64, you may set the environment variable `RAV1E_CPU_TARGET` to `rust` to disable all the assembly-optimized routines at the runtime.
+
+### WASI
+Requires [cargo-wasi](https://github.com/bytecodealliance/cargo-wasi) and [wasmtime](https://github.com/bytecodealliance/wasmtime) or [wasmer](https://github.com/wasmerio/wasmer/)
+
+```sh
+cargo install cargo-wasi
+rustup target add wasm32-wasi
+cargo wasi build --release
+# <INPUT.y4m> needs to be in ./ or subdirectory
+$WASMTIME_OR_WASMER run --dir=. target/wasm32-wasi/release/rav1e.wasi.wasm <INPUT.y4m> -o <OUTPUT.ivf>
+```
 
 ## Contributing
 Please read our guide to [contributing to rav1e](CONTRIBUTING.md).
