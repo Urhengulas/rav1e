@@ -4,3 +4,4 @@ Cargo.lock
 *.y4m
 *.ivf
 secret_key
+.vscode/
