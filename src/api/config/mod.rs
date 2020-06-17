@@ -141,19 +141,7 @@ impl Config {
     self.rate_control = rate_control;
     self
   }
-}
 
-fn check_tile_log2(n: usize) -> bool {
-  let tile_log2 = TilingInfo::tile_log2(1, n);
-  if tile_log2.is_none() {
-    return false;
-  }
-  let tile_log2 = tile_log2.unwrap();
-
-  ((1 << tile_log2) - n) == 0 || n == 0
-}
-
-impl Config {
   /// Creates a [`Context`] with this configuration.
   ///
   /// # Examples
@@ -291,4 +279,14 @@ impl Config {
 
     Ok(())
   }
+}
+
+fn check_tile_log2(n: usize) -> bool {
+  let tile_log2 = TilingInfo::tile_log2(1, n);
+  if tile_log2.is_none() {
+    return false;
+  }
+  let tile_log2 = tile_log2.unwrap();
+
+  ((1 << tile_log2) - n) == 0 || n == 0
 }
