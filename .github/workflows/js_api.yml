@@ -125,6 +125,14 @@ jobs:
                   yarn install
                   yarn build
 
+            # DEPLOY
+            - name: Deploy
+              if: github.event_name == 'push'
+              uses: peaceiris/actions-gh-pages@v3
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: ${{ env.RAV1E_JS_DIR }}/www/build
+
             # STOP SCCACHE
             - name: Stop sccache server
               run: |
