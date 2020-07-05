@@ -27,17 +27,13 @@ pub struct Encoder {
 #[wasm_bindgen]
 impl Encoder {
   #[wasm_bindgen(constructor)]
-  pub fn fromEncoderConfig(conf: EncoderConfig) -> Result<Encoder, JsValue> {
+  pub fn fromEncoderConfig(conf: &EncoderConfig) -> Result<Encoder, JsValue> {
     let cfg = Config::new().with_encoder_config(conf.conf);
 
     match cfg.new_context() {
       Ok(c) => Ok(Encoder { ctx: c }),
       Err(e) => Err(construct_js_err(e, "Invalid EncoderConfig")),
     }
-  }
-
-  pub fn default() -> Result<Encoder, JsValue> {
-    Self::fromEncoderConfig(EncoderConfig::new())
   }
 
   pub fn debug(&self) -> String {

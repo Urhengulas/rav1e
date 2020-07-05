@@ -18,9 +18,6 @@ const conf = new EncoderConfig()
 	.setDim(64, 96)
 	.setRdoLookaheadFrame(1);
 
-// JSON-string representing configuration
-const configStr = conf.toJSON();
-
 // Encoder
 const enc = new Encoder(conf);
 
@@ -85,7 +82,7 @@ export default function App() {
 			<p>Encoder Status: {encoderStatus}</p>
 
 			<HelpAndAbout />
-			<EncoderConfigDetails configStr={configStr} />
+			<EncoderConfigDetails configStr={conf.toJSON()} />
 
 			{packets.length !== 0 ? <h3>Encoded packets</h3> : <div></div>}
 			<ol start={0} >{packets.map((p) => <li key={p.display()}>{p.display()}</li>)}</ol>
