@@ -28,6 +28,14 @@ macro_rules! log {
 	}
 }
 
+// A macro to provide `println!(..)`-style syntax for `console.error` logging.
+#[macro_export]
+macro_rules! err {
+    ( $( $t:tt )* ) => {
+        web_sys::console::error_1(&format!( $( $t )* ).into());
+    }
+}
+
 pub fn construct_js_err(err: impl std::fmt::Display, msg: &str) -> JsValue {
   let mut e = format!("{}", err);
   if msg != "" {
