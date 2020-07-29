@@ -40,45 +40,45 @@ impl Encoder {
     Self::fromEncoderConfig(EncoderConfig::new())
   }
 
-  pub fn debug(&self) -> String {
-    format!("{:?}", self.ctx)
-  }
+//   pub fn debug(&self) -> String {
+//     format!("{:?}", self.ctx)
+//   }
 
-  /// Allocates and returns a new frame.
-  pub fn newFrame(&self) -> Frame {
-    Frame { f: self.ctx.new_frame() }
-  }
+//   /// Allocates and returns a new frame.
+//   pub fn newFrame(&self) -> Frame {
+//     Frame { f: self.ctx.new_frame() }
+//   }
 
-  /// Sends the frame for encoding.
-  ///
-  /// This method adds the frame into the frame queue and runs the first passes of the look-ahead computation.
-  pub fn sendFrame(&mut self, frame: &Frame) -> Result<(), JsValue> {
-    match self.ctx.send_frame(frame.f.clone()) {
-      Ok(_) => Ok(()),
-      Err(e) => match e {
-        EncoderStatus::EnoughData => Err(construct_js_err(
-          e,
-          "Unable to append frame to the internal queue",
-        )),
-        _ => Err(construct_js_err(e, "")),
-      },
-    }
-  }
+//   /// Sends the frame for encoding.
+//   ///
+//   /// This method adds the frame into the frame queue and runs the first passes of the look-ahead computation.
+//   pub fn sendFrame(&mut self, frame: &Frame) -> Result<(), JsValue> {
+//     match self.ctx.send_frame(frame.f.clone()) {
+//       Ok(_) => Ok(()),
+//       Err(e) => match e {
+//         EncoderStatus::EnoughData => Err(construct_js_err(
+//           e,
+//           "Unable to append frame to the internal queue",
+//         )),
+//         _ => Err(construct_js_err(e, "")),
+//       },
+//     }
+//   }
 
-  /// Flushes the encoder.
-  ///
-  /// Flushing signals the end of the video. After the encoder has been flushed, no additional frames are accepted.
-  pub fn flush(&mut self) {
-    self.ctx.flush();
-  }
+//   /// Flushes the encoder.
+//   ///
+//   /// Flushing signals the end of the video. After the encoder has been flushed, no additional frames are accepted.
+//   pub fn flush(&mut self) {
+//     self.ctx.flush();
+//   }
 
-  /// Encodes the next frame and returns the encoded data.
-  ///
-  /// This method is where the main encoding work is done.
-  pub fn receivePacket(&mut self) -> Result<Packet, JsValue> {
-    match self.ctx.receive_packet() {
-      Ok(packet) => Ok(Packet { p: packet }),
-      Err(e) => Err(construct_js_err(e, "")),
-    }
-  }
+//   /// Encodes the next frame and returns the encoded data.
+//   ///
+//   /// This method is where the main encoding work is done.
+//   pub fn receivePacket(&mut self) -> Result<Packet, JsValue> {
+//     match self.ctx.receive_packet() {
+//       Ok(packet) => Ok(Packet { p: packet }),
+//       Err(e) => Err(construct_js_err(e, "")),
+//     }
+//   }
 }

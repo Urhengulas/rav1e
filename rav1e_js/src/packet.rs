@@ -21,10 +21,10 @@ pub struct Packet {
 
 #[wasm_bindgen]
 impl Packet {
-  pub fn display(&self) -> String {
-    format!("{}", self.p)
-  }
-  pub fn debug(&self) -> String {
-    format!("{:?}", self.p)
-  }
+//   pub fn display(&self) -> String {
+//     format!("{}", self.p)
+//   }
+//   pub fn debug(&self) -> String {
+//     format!("{:?}", self.p)
+//   }
 }

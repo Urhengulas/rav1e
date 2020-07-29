@@ -21,7 +21,7 @@ pub struct Frame {
 
 #[wasm_bindgen]
 impl Frame {
-  pub fn debug(&self) -> String {
-    format!("{:?}", self.f)
-  }
+  // pub fn debug(&self) -> String {
+  //   format!("{:?}", self.f)
+  // }
 }
