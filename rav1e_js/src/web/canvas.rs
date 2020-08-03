@@ -13,17 +13,16 @@ use rav1e::prelude::*;
 use std::convert::TryInto;
 use wasm_bindgen::JsCast;
 use web_sys;
-use web_sys::{
-  CanvasRenderingContext2d, Element, HtmlCanvasElement, HtmlImageElement,
-  HtmlVideoElement,
-};
+use web_sys::{CanvasRenderingContext2d, Element, HtmlCanvasElement};
 
 use crate::web;
+use crate::web::{Dimensions, Image, Video};
 
 #[derive(Debug)]
 pub struct Canvas {
   html: HtmlCanvasElement,
   context: CanvasRenderingContext2d,
+  dim: Dimensions,
 }
 
 impl Canvas {
@@ -40,7 +39,7 @@ impl Canvas {
     html.set_height(height);
 
     let context = Self::create_context(&html);
-    Self { html, context }
+    Self { html, context, dim: Dimensions { width, height } }
   }
 
   fn create_context(html: &HtmlCanvasElement) -> CanvasRenderingContext2d {
@@ -56,7 +55,7 @@ impl Canvas {
   ///
   /// ## Read more
   /// * [`CanvasRenderingContext2D.drawImage()`](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage)
-  pub fn draw_image(&self, img: &HtmlImageElement) {
+  pub fn draw_image(&self, img: &Image) {
     // The x- and y-axis coordinates in the destination canvas at which to place the top-left
     // corner of the source image.
     let dx = 0.0;
@@ -64,7 +63,7 @@ impl Canvas {
 
     self
       .context
-      .draw_image_with_html_image_element(img, dx, dy)
+      .draw_image_with_html_image_element(&img.html, dx, dy)
       .expect("failed to draw image onto HtmlImageElement");
   }
 
@@ -72,7 +71,7 @@ impl Canvas {
   ///
   /// ## Read more
   /// * [`CanvasRenderingContext2D.drawImage()`](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage)
-  pub fn draw_video_frame(&self, video: &HtmlVideoElement) {
+  pub fn draw_video_frame(&self, video: &Video) {
     // The x- and y-axis coordinates in the destination canvas at which to place the top-left
     // corner of the source image.
     let dx = 0.0;
@@ -80,7 +79,7 @@ impl Canvas {
 
     self
       .context
-      .draw_image_with_html_video_element(video, dx, dy)
+      .draw_image_with_html_video_element(&video.html, dx, dy)
       .expect("failed to draw video frame onto HtmlCanvasElement");
   }
 
@@ -102,12 +101,7 @@ impl Canvas {
   fn data_rgba(&self) -> Vec<u8> {
     let data = self
       .context
-      .get_image_data(
-        0.0,
-        0.0,
-        self.html.width() as f64,
-        self.html.height() as f64,
-      )
+      .get_image_data(0.0, 0.0, self.dim.width as f64, self.dim.height as f64)
       .unwrap()
       .data()
       .0;
@@ -154,7 +148,7 @@ impl Canvas {
     let src_buffers = &[data.as_slice()];
 
     let mut buffer_vec =
-      create_buffer(self.html.width(), self.html.height(), &dst_format);
+      create_buffer(self.dim.width, self.dim.height, &dst_format);
     let (buffer_vec_0, buffer_vec_1) = buffer_vec.split_at_mut(1);
     let (buffer_vec_1, buffer_vec_2) = buffer_vec_1.split_at_mut(1);
     let dst_buffers = &mut [
@@ -165,8 +159,8 @@ impl Canvas {
 
     dcp::initialize();
     match dcp::convert_image(
-      self.html.width(),
-      self.html.height(),
+      self.dim.width,
+      self.dim.height,
       &src_format,
       None,
       src_buffers,
@@ -196,8 +190,8 @@ impl Canvas {
   pub fn create_frame(&self) -> Frame<u8> {
     let data = self.data_i444();
 
-    let height = self.html.height() as usize;
-    let width = self.html.width() as usize;
+    let height = self.dim.height as usize;
+    let width = self.dim.width as usize;
 
     let mut conf = EncoderConfig::default();
     conf.height = height;
@@ -225,8 +219,11 @@ impl Canvas {
 
 impl From<&HtmlCanvasElement> for Canvas {
   fn from(html: &HtmlCanvasElement) -> Self {
-    let context = Self::create_context(html);
-    Self { html: html.clone(), context }
+    Self {
+      html: html.clone(),
+      context: Self::create_context(html),
+      dim: Dimensions { width: html.width(), height: html.height() },
+    }
   }
 }
 

@@ -69,7 +69,7 @@ impl VideoEncoder {
   ///
   /// This process is done as soon `HtmlVideoElement.ended === true`.
   pub fn sendVideo(&mut self, video: &HtmlVideoElement) {
-    let video = Video::new(video.clone());
+    let video = Video::new(video);
 
     {
       let canvas = Rc::clone(&self.canvas);
@@ -81,7 +81,7 @@ impl VideoEncoder {
         // cloning is needed, because they will get moved into Closure 'g'
         let ctx_1 = Rc::clone(&ctx);
         let canvas_1 = Rc::clone(&canvas);
-        let video_1 = Video::from(event);
+        let video_1 = Video::from(&event);
 
         // TODO: add time param to closure?
         *g.borrow_mut() = Some(Closure::wrap(Box::new(move || {
@@ -91,7 +91,7 @@ impl VideoEncoder {
             f.borrow_mut().take();
             return;
           } else if video_1.ready() {
-            canvas_1.borrow().draw_video_frame(&video_1.html);
+            canvas_1.borrow().draw_video_frame(&video_1);
             let frame = canvas_1.borrow().create_frame();
             match ctx_1.borrow_mut().send_frame(frame) {
               Ok(_) => {}

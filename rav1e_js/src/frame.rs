@@ -11,7 +11,7 @@ use rav1e;
 use wasm_bindgen::prelude::*;
 use web_sys::{HtmlCanvasElement, HtmlImageElement, HtmlVideoElement};
 
-use crate::web::Canvas;
+use crate::web::{Canvas, Image, Video};
 
 /// Represents one video frame
 #[wasm_bindgen]
@@ -27,8 +27,9 @@ impl Frame {
 
   /// Create a new `Frame` from the underlying pixel-data of a `HtmlImageElement`.
   pub fn from_img(img: &HtmlImageElement) -> Self {
-    let canvas = Canvas::new(img.width(), img.height());
-    canvas.draw_image(img);
+    let img = Image::new(img);
+    let canvas = Canvas::new(img.dim.width, img.dim.height);
+    canvas.draw_image(&img);
     Frame { f: canvas.create_frame() }
   }
 
@@ -37,9 +38,14 @@ impl Frame {
     Frame { f: canvas.create_frame() }
   }
 
+  /// Create a new `Frame` from the underlying pixel-data of the current frame of
+  /// a `HtmlVideoElement`.
+  ///
+  /// To send a whole `HtmlVideoElement` to the Encoder use `VideoEncoder.sendVideo()`.
   pub fn from_video(video: &HtmlVideoElement) -> Self {
-    let canvas = Canvas::new(video.video_width(), video.video_height());
-    canvas.draw_video_frame(video);
+    let video = Video::new(&video);
+    let canvas = Canvas::new(video.dim.width, video.dim.height);
+    canvas.draw_video_frame(&video);
     Frame { f: canvas.create_frame() }
   }
 }

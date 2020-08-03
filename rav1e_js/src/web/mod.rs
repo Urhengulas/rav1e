@@ -14,8 +14,17 @@ use web_sys::{Document, Window};
 mod canvas;
 pub use canvas::Canvas;
 
+mod image;
+pub use image::Image;
+
 mod video;
 pub use video::Video;
+
+#[derive(Debug)]
+pub struct Dimensions {
+  pub width: u32,
+  pub height: u32,
+}
 
 /// The `Document` interface represents any web page loaded in the browser and serves
 /// as an entry point into the web page's content, which is the DOM tree.

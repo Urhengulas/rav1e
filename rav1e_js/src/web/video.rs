@@ -11,14 +11,20 @@ use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 use web_sys::{Event, HtmlVideoElement};
 
+use crate::web::Dimensions;
+
 #[derive(Debug)]
 pub struct Video {
   pub html: HtmlVideoElement,
+  pub dim: Dimensions,
 }
 
 impl Video {
-  pub fn new(html: HtmlVideoElement) -> Self {
-    Self { html }
+  pub fn new(html: &HtmlVideoElement) -> Self {
+    Self {
+      html: html.clone(),
+      dim: Dimensions { width: html.video_width(), height: html.video_height() },
+    }
   }
 
   /// Set up a function that will be called whenever the specified `event` is delivered to the target
@@ -61,10 +67,10 @@ impl Video {
   }
 }
 
-impl From<Event> for Video {
-  fn from(event: Event) -> Self {
+impl From<&Event> for Video {
+  fn from(event: &Event) -> Self {
     Video::new(
-      event
+      &event
         .target()
         .unwrap()
         .dyn_into::<HtmlVideoElement>()
