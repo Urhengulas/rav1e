@@ -19,7 +19,7 @@ use web_sys::{Event, HtmlVideoElement};
 use crate::encoder::Encoder;
 use crate::utils::construct_js_err;
 use crate::web;
-use crate::web::{Canvas, Video};
+use crate::web::{Canvas, PixelData, Video};
 use crate::{log, EncoderConfig, Frame, Packet};
 
 /// Contains the encoding state
@@ -69,18 +69,20 @@ impl VideoEncoder {
   ///
   /// This process is done as soon `HtmlVideoElement.ended === true`.
   pub fn sendVideo(&mut self, video: &HtmlVideoElement) {
-    let video = Video::new(video);
+    let video = Rc::new(Video::new(video));
+    let data_q: Rc<RefCell<Vec<PixelData>>> =
+      Rc::new(RefCell::new(Vec::new()));
 
     {
       let canvas = Rc::clone(&self.canvas);
-      let ctx = Rc::clone(&self.ctx);
+      let data_q_1 = Rc::clone(&data_q);
       let onplay = Box::new(move |event: Event| {
         let f = Rc::new(RefCell::new(None));
         let g = Rc::clone(&f);
 
         // cloning is needed, because they will get moved into Closure 'g'
-        let ctx_1 = Rc::clone(&ctx);
         let canvas_1 = Rc::clone(&canvas);
+        let data_q_1 = Rc::clone(&data_q_1);
         let video_1 = Video::from(&event);
 
         // TODO: add time param to closure?
@@ -92,15 +94,9 @@ impl VideoEncoder {
             return;
           } else if video_1.ready() {
             canvas_1.borrow().draw_video_frame(&video_1);
-            let frame = canvas_1.borrow().pixel_data().create_frame();
-            match ctx_1.borrow_mut().send_frame(frame) {
-              Ok(_) => {}
-              Err(e) => match e {
-                EncoderStatus::EnoughData => log!("{}", e),
-                _ => panic!(e),
-              },
-            }
-            log!("send");
+            let data = canvas_1.borrow().pixel_data();
+            data_q_1.borrow_mut().push(data);
+            log!("send_data");
           }
 
           web::request_animation_frame(f.borrow().as_ref().unwrap());
@@ -108,6 +104,26 @@ impl VideoEncoder {
         web::request_animation_frame(g.borrow().as_ref().unwrap());
       });
       video.add_event_listener("play", onplay);
+    }
+
+    {
+      let ctx = Rc::clone(&self.ctx);
+      let data_q_1 = Rc::clone(&data_q);
+      let video_1 = Rc::clone(&video);
+      let onended = Box::new(move |_event: Event| {
+        data_q_1.borrow().iter().for_each(|pixel_data| {
+          match ctx.borrow_mut().send_frame(pixel_data.create_frame()) {
+            Ok(_) => {}
+            Err(e) => match e {
+              EncoderStatus::EnoughData => log!("{}", e),
+              _ => panic!(e),
+            },
+          }
+          log!("send_frame");
+        });
+        video_1.dispatch_event("start_encoding");
+      });
+      video.add_event_listener("ended", onended);
     }
   }
 

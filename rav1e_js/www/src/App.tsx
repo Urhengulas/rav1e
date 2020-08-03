@@ -28,7 +28,7 @@ export default function App() {
 		);
 		enc.sendVideo(video);
 
-		video.addEventListener("ended", (e) => {
+		video.addEventListener("start_encoding", (e) => {
 			enc.flush()
 
 			// encode all frames

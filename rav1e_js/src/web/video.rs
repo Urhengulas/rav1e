@@ -31,14 +31,14 @@ impl Video {
   ///
   /// [EventTarget.addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener)
   pub fn add_event_listener(
-    &self, event: &str, callback: Box<dyn FnMut(Event)>,
+    &self, event_name: &str, callback: Box<dyn FnMut(Event)>,
   ) {
     let closure = Closure::wrap(callback);
 
     self
       .html
       .add_event_listener_with_callback(
-        event,
+        event_name,
         closure.as_ref().unchecked_ref(),
       )
       .expect("failed to add 'onended' event-listener to <video> element");
@@ -46,6 +46,14 @@ impl Video {
     // leaks memory
     // TODO: How to drop it?
     closure.forget();
+  }
+
+  /// Dispatches an Event (with `event_name`) and (synchronously) invokes the affected EventListeners in the appropriate order.
+  ///
+  /// [EventTarget.dispatchEvent()](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/dispatchEvent)
+  pub fn dispatch_event(&self, event_name: &str) {
+    let event = Event::new(event_name).unwrap();
+    self.html.dispatch_event(&event).unwrap();
   }
 
   /// Indicates whether the video has ended playback
