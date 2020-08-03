@@ -92,7 +92,7 @@ impl VideoEncoder {
             return;
           } else if video_1.ready() {
             canvas_1.borrow().draw_video_frame(&video_1);
-            let frame = canvas_1.borrow().create_frame();
+            let frame = canvas_1.borrow().pixel_data().create_frame();
             match ctx_1.borrow_mut().send_frame(frame) {
               Ok(_) => {}
               Err(e) => match e {

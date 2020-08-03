@@ -30,12 +30,12 @@ impl Frame {
     let img = Image::new(img);
     let canvas = Canvas::new(img.dim.width, img.dim.height);
     canvas.draw_image(&img);
-    Frame { f: canvas.create_frame() }
+    Frame { f: canvas.pixel_data().create_frame() }
   }
 
   pub fn from_canvas(canvas: &HtmlCanvasElement) -> Self {
     let canvas = Canvas::from(canvas);
-    Frame { f: canvas.create_frame() }
+    Frame { f: canvas.pixel_data().create_frame() }
   }
 
   /// Create a new `Frame` from the underlying pixel-data of the current frame of
@@ -46,6 +46,6 @@ impl Frame {
     let video = Video::new(&video);
     let canvas = Canvas::new(video.dim.width, video.dim.height);
     canvas.draw_video_frame(&video);
-    Frame { f: canvas.create_frame() }
+    Frame { f: canvas.pixel_data().create_frame() }
   }
 }

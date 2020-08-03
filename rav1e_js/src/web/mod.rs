@@ -17,10 +17,13 @@ pub use canvas::Canvas;
 mod image;
 pub use image::Image;
 
+mod pixel_data;
+pub use pixel_data::PixelData;
+
 mod video;
 pub use video::Video;
 
-#[derive(Debug)]
+#[derive(Clone, Copy, Debug)]
 pub struct Dimensions {
   pub width: u32,
   pub height: u32,
