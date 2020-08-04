@@ -86,7 +86,7 @@ impl VideoEncoder {
         let video_1 = Video::from(&event);
 
         // TODO: add time param to closure?
-        *g.borrow_mut() = Some(Closure::wrap(Box::new(move || {
+        *g.borrow_mut() = Some(Closure::wrap(Box::new(move |time| {
           if video_1.paused() {
             return;
           } else if video_1.ended() {
@@ -96,11 +96,12 @@ impl VideoEncoder {
             canvas_1.borrow().draw_video_frame(&video_1);
             let data = canvas_1.borrow().pixel_data();
             data_q_1.borrow_mut().push(data);
-            log!("send_data");
+            log!("send_data ({}s)", time / 1000.0);
           }
 
           web::request_animation_frame(f.borrow().as_ref().unwrap());
-        }) as Box<dyn FnMut()>));
+        })
+          as Box<dyn FnMut(f64)>));
         web::request_animation_frame(g.borrow().as_ref().unwrap());
       });
       video.add_event_listener("play", onplay);

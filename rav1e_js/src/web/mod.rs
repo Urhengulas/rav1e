@@ -41,7 +41,7 @@ pub fn document() -> Document {
 /// calls a specified function (`f`) to update an animation before the next repaint.
 ///
 /// https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
-pub fn request_animation_frame(f: &Closure<dyn FnMut()>) {
+pub fn request_animation_frame(f: &Closure<dyn FnMut(f64)>) {
   window()
     .request_animation_frame(f.as_ref().unchecked_ref())
     .expect("Couldn't register `requestAnimationFrame`");
