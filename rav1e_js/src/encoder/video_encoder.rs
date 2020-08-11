@@ -75,6 +75,8 @@ impl VideoEncoder {
       let canvas = Rc::clone(&self.canvas);
       let ctx = Rc::clone(&self.ctx);
       let onplay = Box::new(move |event: Event| {
+        let start_time = web::performance_now();
+
         let f = Rc::new(RefCell::new(None));
         let g = Rc::clone(&f);
 
@@ -85,10 +87,12 @@ impl VideoEncoder {
 
         // TODO: add time param to closure?
         *g.borrow_mut() = Some(Closure::wrap(Box::new(move || {
-          if video_1.paused() {
-            return;
-          } else if video_1.ended() {
+          if video_1.ended() {
+            log!("Collected ? Frames in {}s", web::performance_now() - start_time);
             f.borrow_mut().take();
+            return;
+          } else if video_1.paused() {
+            log!("paused");
             return;
           } else if video_1.ready() {
             canvas_1.borrow().draw_video_frame(&video_1.html);
@@ -100,7 +104,6 @@ impl VideoEncoder {
                 _ => panic!(e),
               },
             }
-            log!("send");
           }
 
           web::request_animation_frame(f.borrow().as_ref().unwrap());

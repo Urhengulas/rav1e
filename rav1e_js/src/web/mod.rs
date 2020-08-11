@@ -25,6 +25,13 @@ pub fn document() -> Document {
   window().document().expect("Couldn't find DOM `document` in `window`!")
 }
 
+/// Time elapsed since the [time origin](https://developer.mozilla.org/en-US/docs/Web/API/DOMHighResTimeStamp#The_time_origin), in seconds.
+///
+/// https://developer.mozilla.org/en-US/docs/Web/API/Performance/now
+pub fn performance_now() -> f64 {
+  window().performance().unwrap().now() / 1000.0
+}
+
 /// Tells the browser that you wish to perform an animation and requests that the browser
 /// calls a specified function (`f`) to update an animation before the next repaint.
 ///
