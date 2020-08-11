@@ -29,6 +29,7 @@ export default function App() {
 		enc.sendVideo(video);
 
 		video.addEventListener("ended", (e) => {
+			const start_time = performance.now();
 			enc.flush()
 
 			// encode all frames
@@ -47,6 +48,7 @@ export default function App() {
 					}
 				}
 			}
+			console.log(`Encoding took ${performance.now() - start_time}`)
 		})
 	}
 
