@@ -336,6 +336,12 @@ impl<T: Pixel> Context<T> {
 
     sequence_header_inner(&seq).unwrap()
   }
+
+  /// Number of frames send to the encoder
+  #[cfg(feature = "wasm")]
+  pub fn frame_count(&self) -> u64 {
+    self.inner.frame_count
+  }
 }
 
 /// Rate Control Data

@@ -88,7 +88,11 @@ impl VideoEncoder {
         // TODO: add time param to closure?
         *g.borrow_mut() = Some(Closure::wrap(Box::new(move || {
           if video_1.ended() {
-            log!("Collected ? Frames in {}s", web::performance_now() - start_time);
+            log!(
+              "Collected {} Frames in {}s",
+              ctx_1.borrow().frame_count(),
+              web::performance_now() - start_time
+            );
             f.borrow_mut().take();
             return;
           } else if video_1.paused() {
