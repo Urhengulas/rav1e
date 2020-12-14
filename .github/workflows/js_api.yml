@@ -19,6 +19,7 @@ jobs:
                       driver: --geckodriver ./geckodriver
                     - conf: chrome
                       headless: --headless
+            fail-fast: false
 
         env:
             RUST_BACKTRACE: 1
